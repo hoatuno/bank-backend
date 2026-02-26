@@ -9,7 +9,7 @@ export class GoogleService {
 
   constructor() {
     const auth = new GoogleAuth({
-      keyFile: path.join(process.cwd(), 'credentials.json'),
+      keyFile: path.join(process.cwd(), '.env'),
 
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });

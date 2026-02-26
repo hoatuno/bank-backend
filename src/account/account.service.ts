@@ -11,7 +11,13 @@ export class AccountService {
 
 
   async findAll() {
-    return this.google.read(this.spreadsheetId, this.range);
+    const rows = await this.google.read(this.spreadsheetId, this.range);
+
+    return rows.map(row => ({
+      id: row[0],
+      name: row[1],
+      balance: Number(row[2]),
+    }));
   }
 
   /** đọc toàn bộ rows */
@@ -41,8 +47,8 @@ export class AccountService {
   /** update balance dùng chung */
   private async updateBalance(
     accountId: string,
-    delta: number,
-    type: TransactionType = 'deposit',
+    type: TransactionType,
+    delta: number
   ) {
     const rows = await this.getRows();
 
@@ -72,6 +78,6 @@ export class AccountService {
   async changeBalance(accountId: string, amount: number, type: TransactionType) {
     const delta = type === 'deposit' ? amount : -amount;
 
-    return this.updateBalance(accountId, delta);
+    return this.updateBalance(accountId, type, delta);
   }
 }

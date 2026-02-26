@@ -75,7 +75,7 @@ export class TransactionService {
     const transactions =
       rows.map(
         row => this.mapRow(row),
-      );
+      ).reverse();
 
     if (accountId)
       return transactions.filter(
